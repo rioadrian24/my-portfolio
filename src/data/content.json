@@ -1,0 +1,54 @@
+{
+  "contact": {
+    "email": "[rioadrian646@gmail.com]",
+    "github": "https://github.com/rioadrian24",
+    "linkedin": "https://linkedin.com/in/[username]",
+    "note": "[I'AM READY FOR COLLABORATION]"
+  },
+  "profile": {
+    "avatarEmoji": "🧑‍💻",
+    "bio": "Saya adalah guru SMK sekaligus Fullstack Web Developer yang memiliki minat besar pada web development, kecerdasan buatan (AI), server, dan automation. Saya senang bereksperimen dengan teknologi, membangun aplikasi yang mengintegrasikan API AI, serta terus belajar melalui praktik dan inovasi. Ke depannya, saya ingin membangun berbagai aplikasi SaaS yang bermanfaat bagi masyarakat dan mengembangkan sistem pendidikan digital yang inovatif.",
+    "location": "Kab. Bogor, Indonesia]",
+    "name": "Rio Adrian Maulana Gymnastiar, S.Kom",
+    "role": "Software Engineering Teacher",
+    "tagline": "[INOVASI, EKSPLORASI, BELAJAR TANPA HENTI]"
+  },
+  "projects": [
+    {
+      "accent": "#33ff66",
+      "demo": "https://notifora.web.id",
+      "description": "Otomatiskan notifikasi, OTP, tagihan, dan broadcast WhatsApp melalui REST API.",
+      "repo": "https://github.com/rioadrian24",
+      "tech": ["[NextJs]", "[Tailwind]", "[Redis]", "[BullMQ]"],
+      "title": "[Notifora | WhatsApp Gateway API]"
+    },
+    {
+      "accent": "#ffb000",
+      "demo": "https://example.com/demo2",
+      "description": "[Deskripsi singkat proyek 2.]",
+      "repo": "https://github.com/username/repo2",
+      "tech": ["[Tech1]", "[Tech2]"],
+      "title": "[JUDUL PROYEK 2]"
+    },
+    {
+      "accent": "#33ccff",
+      "demo": "https://example.com/demo3",
+      "description": "[Deskripsi singkat proyek 3.]",
+      "repo": "https://github.com/username/repo3",
+      "tech": ["[Tech1]", "[Tech2]", "[Tech3]"],
+      "title": "[JUDUL PROYEK 3]"
+    },
+    {
+      "accent": "#ff66aa",
+      "demo": "https://example.com/demo4",
+      "description": "[Deskripsi singkat proyek 4.]",
+      "repo": "https://github.com/username/repo4",
+      "tech": ["[Tech1]", "[Tech2]"],
+      "title": "[JUDUL PROYEK 4]"
+    }
+  ],
+  "resume": { "label": "Unduh Resume (PDF)", "url": "resume.pdf" },
+  "terminal": {
+    "motd": "Selamat datang di RETRO-OS v1.0 — ketik 'help' untuk daftar perintah."
+  }
+}

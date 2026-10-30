@@ -1,0 +1,150 @@
+/* ====== OS Mini — tampilan CRT di dalam layar monitor ====== */
+#os-overlay {
+  position: fixed; inset: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: center;
+  background: #000;
+  opacity: 0; transition: opacity .45s ease;
+}
+#os-overlay.show { opacity: 1; }
+
+#os-screen {
+  position: relative; width: 100vw; height: 100vh; overflow: hidden;
+  background: #020603;
+  font-family: "Courier New", Courier, monospace;
+  user-select: none; -webkit-user-select: none;
+}
+
+/* --- Lapisan efek CRT (di atas konten, pointer-events: none) --- */
+#os-crt {
+  position: absolute; inset: 0; z-index: 40; pointer-events: none;
+  border-radius: 2.5vmin;
+}
+#os-crt::before { /* scanlines */
+  content: ""; position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    to bottom, rgba(0,0,0,.28) 0 1px, transparent 1px 3px
+  );
+  mix-blend-mode: multiply;
+}
+#os-crt::after { /* vignette + kelengkungan */
+  content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at center, transparent 52%, rgba(0,0,0,.55) 100%),
+    radial-gradient(ellipse at center, rgba(51,255,102,.05) 0%, transparent 70%);
+}
+#os-screen.flicker #os-crt { animation: crtFlicker 4s infinite; }
+@keyframes crtFlicker {
+  0%, 100% { opacity: 1; }
+  3% { opacity: .96; } 3.5% { opacity: 1; }
+  57% { opacity: .985; } 57.4% { opacity: 1; }
+}
+#os-screen .chroma { /* chromatic aberration tipis via text-shadow ganda */
+  text-shadow: 1px 0 rgba(255,0,80,.35), -1px 0 rgba(0,180,255,.35), 0 0 8px currentColor;
+}
+
+/* --- Boot --- */
+#os-boot {
+  position: absolute; inset: 0; z-index: 10; padding: 6vmin;
+  color: #33ff66; font-size: clamp(.8rem, 2.4vmin, 1.05rem); line-height: 1.55;
+  white-space: pre-wrap; word-break: break-word;
+  text-shadow: 0 0 8px rgba(51,255,102,.8);
+}
+#os-boot .ok { color: #9dffb8; }
+#os-boot .warn { color: #ffb000; }
+
+/* --- Desktop --- */
+#os-desktop { position: absolute; inset: 0; z-index: 10; }
+#os-icons {
+  position: absolute; top: 4vmin; left: 3vmin; z-index: 12;
+  display: flex; flex-direction: column; gap: 3.2vmin;
+}
+.os-icon {
+  display: flex; flex-direction: column; align-items: center; gap: .6vmin;
+  width: 13vmin; background: none; border: none; cursor: pointer;
+  color: #d9f2e2; font-family: inherit; font-size: clamp(.62rem, 1.9vmin, .85rem);
+  padding: 1vmin; border-radius: 6px;
+}
+.os-icon:hover, .os-icon:focus-visible { background: rgba(51,255,102,.14); outline: 1px dashed #33ff66; }
+.os-icon .glyph { font-size: clamp(1.6rem, 6vmin, 2.6rem); filter: drop-shadow(0 0 6px rgba(51,255,102,.6)); }
+.os-icon span:last-child { text-align: center; text-shadow: 0 0 6px rgba(51,255,102,.7); }
+
+/* --- Jendela --- */
+#os-windows { position: absolute; inset: 0; z-index: 15; pointer-events: none; }
+.os-window {
+  position: absolute; min-width: 46vmin; max-width: 92vmin;
+  background: #04140a; border: 2px solid #2fae57; border-radius: 6px;
+  box-shadow: 0 0 24px rgba(51,255,102,.25), 0 18px 50px rgba(0,0,0,.6);
+  display: flex; flex-direction: column; overflow: hidden;
+  pointer-events: auto; color: #c9e8d2;
+  animation: winIn .22s ease-out;
+}
+@keyframes winIn { from { transform: scale(.96); opacity: 0; } }
+.os-titlebar {
+  display: flex; align-items: center; gap: .6rem;
+  background: linear-gradient(90deg, #0d3a1e, #155a2d);
+  color: #eafff0; padding: .45rem .6rem; cursor: grab;
+  font-size: clamp(.7rem, 2vmin, .9rem); letter-spacing: .06em;
+}
+.os-titlebar:active { cursor: grabbing; }
+.os-titlebar .ttl { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.os-btn {
+  border: 1px solid #9dffb8; background: #0a2413; color: #9dffb8;
+  width: 1.7em; height: 1.7em; line-height: 1; border-radius: 4px; cursor: pointer;
+  font-family: inherit; font-size: .85em;
+}
+.os-btn:hover { background: #1a7a33; color: #04140a; }
+.os-body { padding: 1rem 1.1rem; font-size: clamp(.75rem, 2.2vmin, .95rem); line-height: 1.6; max-height: 62vh; overflow-y: auto; }
+.os-body h3 { color: #33ff66; margin-bottom: .4rem; text-shadow: 0 0 8px rgba(51,255,102,.7); }
+.os-body a { color: #33ccff; }
+.os-body .meta { color: #7dbb8c; font-size: .85em; }
+.proj { border: 1px solid #1e462b; border-radius: 6px; padding: .7rem .8rem; margin: .7rem 0; background: rgba(51,255,102,.04); }
+.proj h4 { color: #9dffb8; }
+.proj .tech { color: #ffb000; font-size: .8em; margin: .25rem 0; }
+.proj .links a { margin-right: .8rem; }
+.big-btn {
+  display: inline-block; margin-top: .8rem; padding: .6rem 1.2rem;
+  border: 2px solid #33ff66; color: #33ff66; text-decoration: none; border-radius: 6px;
+  background: rgba(51,255,102,.08); font-family: inherit; cursor: pointer; font-size: 1em;
+}
+.big-btn:hover { background: #33ff66; color: #04140a; }
+
+/* --- Terminal --- */
+.os-term { background: #010402; padding: .8rem; border-radius: 4px; min-height: 30vmin; font-size: clamp(.72rem, 2.1vmin, .9rem); }
+.os-term .out { white-space: pre-wrap; word-break: break-word; color: #9dffb8; }
+.os-term .prompt-line { display: flex; gap: .4em; align-items: baseline; }
+.os-term .ps { color: #ffb000; }
+.os-term input {
+  flex: 1; background: transparent; border: none; outline: none; color: #33ff66;
+  font: inherit; caret-color: #33ff66; min-width: 0;
+}
+
+/* --- Taskbar --- */
+#os-taskbar {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 20;
+  display: flex; align-items: center; gap: .6rem;
+  background: linear-gradient(180deg, #0d3a1e, #082412);
+  border-top: 2px solid #2fae57; padding: .45rem .8rem;
+  font-size: clamp(.7rem, 2vmin, .9rem); color: #d9f2e2;
+}
+#os-taskbar .spacer { flex: 1; }
+#os-start, #os-exit, #os-sound {
+  font-family: inherit; font-size: 1em; cursor: pointer;
+  background: #0a2413; color: #9dffb8; border: 1px solid #2fae57;
+  border-radius: 4px; padding: .3rem .7rem;
+}
+#os-start:hover, #os-exit:hover, #os-sound:hover { background: #1a7a33; color: #04140a; }
+#os-exit { border-color: #ffb000; color: #ffb000; }
+#os-exit:hover { background: #ffb000; color: #1a1000; }
+#os-taskbar-windows { display: flex; gap: .4rem; }
+.taskbtn {
+  font-family: inherit; font-size: .85em; background: #0a2413; color: #9dffb8;
+  border: 1px solid #2fae57; border-radius: 4px; padding: .3rem .6rem; cursor: pointer;
+  max-width: 22vmin; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.taskbtn.active { background: #1a7a33; color: #04140a; }
+#os-clock { color: #9dffb8; text-shadow: 0 0 6px rgba(51,255,102,.7); min-width: 5.5em; text-align: right; }
+
+@media (prefers-reduced-motion: reduce) {
+  #os-screen.flicker #os-crt, .os-window { animation: none; }
+  #os-overlay { transition: none; }
+}
